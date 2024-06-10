@@ -1,32 +1,85 @@
-import Button from "@mui/material/Button";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import ThreeDRotation from "@mui/icons-material/ThreeDRotation";
-import HomeIcon from "@mui/icons-material/Home";
-import Typography from "@mui/material/Typography";
+import { useColorScheme } from "@mui/material/styles";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import SettingsBrightnessIcon from "@mui/icons-material/SettingsBrightness";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
+function ModeSelect() {
+  const { mode, setMode } = useColorScheme();
+  const handleChange = (event) => {
+    const selectMode = event.target.value;
+    setMode(selectMode);
+  };
+  return (
+    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+      <InputLabel id="lable-select-dark-ligth-mode">Mode</InputLabel>
+      <Select
+        labelId="lable-select-dark-ligth-mode"
+        id="select-dark-ligth-mode"
+        value={mode}
+        label="mode"
+        onChange={handleChange}
+      >
+        <MenuItem value="light">
+          <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <LightModeIcon fontSize="small" /> Ligth
+          </Box>
+        </MenuItem>
+        <MenuItem value="dark">
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <DarkModeOutlinedIcon fontSize="small" /> Dark
+          </Box>
+        </MenuItem>
+        <MenuItem value="system">
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <SettingsBrightnessIcon fontSize="small" /> System
+          </Box>
+        </MenuItem>
+      </Select>
+    </FormControl>
+  );
+}
 
 function App() {
   return (
-    <>
-     <Typography variant="body2" gutterBottom color="text.success">
-        body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-        blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-        neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum
-        quasi quidem quibusdam.
-      </Typography>
-      <div>Đặng Huy Phú</div>
-      <Button variant="contained">Hello world</Button>
-      <Button variant="text">Text</Button>
-      <Button variant="contained">Contained</Button>
-      <Button variant="outlined">Outlined</Button>
+    <Container
+      disableGutters
+      maxWidth={false}
+      sx={{ height: "100vh", 
+      boxSizing: "border-box",
+      overflow: "hidden",}}
+    >
+      <Box
+        sx={{
+          backgroundColor: "primary.light",
+          width: "100%",
+          height: (theme) => theme.trello.appHeaderHeight,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <ModeSelect />
+        header
+      </Box>
 
-      <HomeIcon color="primary" />
-      <HomeIcon color="secondary" />
-      <HomeIcon color="success" />
-      <HomeIcon color="action" />
-      <HomeIcon color="disabled" />
-
-    </>
+      <Box sx={{ display:"flex",maxWidth:"100%" }}>
+        <Box xs={3} sx={{ backgroundColor: "primary.dark" , 
+          width: (theme) => theme.trello.appGridMenu,
+          height: "100vh",  }}>
+            menu
+        </Box>
+        <Box xs={9} sx={{ backgroundColor: "primary.main" , 
+          width: (theme) => theme.trello.appGridContent,
+          height: "100vh"}}>
+        content
+        </Box>
+      </Box>
+  </Container>
   );
 }
 
